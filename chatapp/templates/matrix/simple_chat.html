@@ -1,4 +1,5 @@
 {% load static %}
+{% load widget_tweaks %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,8 +24,9 @@
             {% endfor %}
         </ul>
     </div>
-    <form>
-        <input id="chat-input" type="text" placeholder="say anything" autofocus/>
+    <form method="post">
+        {% csrf_token %}
+        {% render_field form.typedtext id="chat-input" type="text" placeholder="say anything" autofocus="true" %}
     </form>
 
   </section>

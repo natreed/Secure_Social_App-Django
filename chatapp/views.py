@@ -28,13 +28,6 @@ class SimpleChat(View):
 
         return render(request, 'matrix/simple_chat.html', self.context)
 
-    def get_context(self):
-        msgs = []
-        form = AddToChatForm()
-        client = CLIENTS[0]
-
-        return {'mclient': client, 'messages': msgs, 'form': form}
-
 
 def get_login(request):
     if request.method == 'POST':  # If the form has been submitted...

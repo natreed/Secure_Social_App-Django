@@ -2,137 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="960b39a6-9d92-45c4-ada8-b745aa37a5c0" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/forms.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/css/main.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/css/util.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/JosefinSans/JosefinSans-Bold.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/JosefinSans/JosefinSans-BoldItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/JosefinSans/JosefinSans-Italic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/JosefinSans/JosefinSans-Light.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/JosefinSans/JosefinSans-LightItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/JosefinSans/JosefinSans-Regular.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/JosefinSans/JosefinSans-SemiBold.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/JosefinSans/JosefinSans-SemiBoldItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/JosefinSans/JosefinSans-Thin.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/JosefinSans/JosefinSans-ThinItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/JosefinSans/OFL.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/Linearicons-Free-v1.0.0/WebFont/Linearicons-Free.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/Linearicons-Free-v1.0.0/WebFont/Linearicons-Free.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/Linearicons-Free-v1.0.0/WebFont/Linearicons-Free.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/Linearicons-Free-v1.0.0/WebFont/Linearicons-Free.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/Linearicons-Free-v1.0.0/WebFont/Linearicons-Free.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/Linearicons-Free-v1.0.0/icon-font.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/OpenSans/OpenSans-Bold.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/OpenSans/OpenSans-BoldItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/OpenSans/OpenSans-ExtraBold.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/OpenSans/OpenSans-ExtraBoldItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/OpenSans/OpenSans-Italic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/OpenSans/OpenSans-Light.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/OpenSans/OpenSans-LightItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/OpenSans/OpenSans-Regular.otf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/OpenSans/OpenSans-Regular.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/OpenSans/OpenSans-SemiBold.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/OpenSans/OpenSans-SemiBoldItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/font-awesome-4.7.0/HELP-US-OUT.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/font-awesome-4.7.0/css/font-awesome.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/font-awesome-4.7.0/css/font-awesome.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/font-awesome-4.7.0/fonts/FontAwesome.otf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/font-awesome-4.7.0/fonts/fontawesome-webfont.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/font-awesome-4.7.0/fonts/fontawesome-webfont.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/font-awesome-4.7.0/fonts/fontawesome-webfont.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/font-awesome-4.7.0/fonts/fontawesome-webfont.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/font-awesome-4.7.0/fonts/fontawesome-webfont.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/font-awesome-4.7.0/less/animated.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/font-awesome-4.7.0/less/bordered-pulled.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/font-awesome-4.7.0/less/core.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/font-awesome-4.7.0/less/fixed-width.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/font-awesome-4.7.0/less/font-awesome.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/font-awesome-4.7.0/less/icons.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/font-awesome-4.7.0/less/larger.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/font-awesome-4.7.0/less/list.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/font-awesome-4.7.0/less/mixins.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/font-awesome-4.7.0/less/path.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/font-awesome-4.7.0/less/rotated-flipped.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/font-awesome-4.7.0/less/screen-reader.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/font-awesome-4.7.0/less/stacked.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/font-awesome-4.7.0/less/variables.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/font-awesome-4.7.0/scss/_animated.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/font-awesome-4.7.0/scss/_bordered-pulled.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/font-awesome-4.7.0/scss/_core.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/font-awesome-4.7.0/scss/_fixed-width.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/font-awesome-4.7.0/scss/_icons.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/font-awesome-4.7.0/scss/_larger.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/font-awesome-4.7.0/scss/_list.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/font-awesome-4.7.0/scss/_mixins.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/font-awesome-4.7.0/scss/_path.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/font-awesome-4.7.0/scss/_rotated-flipped.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/font-awesome-4.7.0/scss/_screen-reader.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/font-awesome-4.7.0/scss/_stacked.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/font-awesome-4.7.0/scss/_variables.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/font-awesome-4.7.0/scss/font-awesome.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/oswald/Oswald-Bold.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/oswald/Oswald-ExtraLight.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/oswald/Oswald-Light.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/oswald/Oswald-Medium.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/oswald/Oswald-Regular.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/fonts/oswald/Oswald-SemiBold.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/images/bg-01.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/images/icons/favicon.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/images/icons/map-marker.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/images/img-01.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/js/main.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/js/map-custom.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/vendor/animate/animate.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/vendor/animsition/css/animsition.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/vendor/animsition/css/animsition.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/vendor/animsition/js/animsition.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/vendor/animsition/js/animsition.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/vendor/bootstrap/css/bootstrap-grid.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/vendor/bootstrap/css/bootstrap-grid.css.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/vendor/bootstrap/css/bootstrap-grid.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/vendor/bootstrap/css/bootstrap-grid.min.css.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/vendor/bootstrap/css/bootstrap-reboot.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/vendor/bootstrap/css/bootstrap-reboot.css.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/vendor/bootstrap/css/bootstrap-reboot.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/vendor/bootstrap/css/bootstrap-reboot.min.css.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/vendor/bootstrap/css/bootstrap.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/vendor/bootstrap/css/bootstrap.css.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/vendor/bootstrap/css/bootstrap.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/vendor/bootstrap/css/bootstrap.min.css.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/vendor/bootstrap/js/bootstrap.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/vendor/bootstrap/js/bootstrap.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/vendor/bootstrap/js/popper.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/vendor/bootstrap/js/popper.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/vendor/bootstrap/js/tooltip.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/vendor/countdowntime/countdowntime.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/vendor/css-hamburgers/hamburgers.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/vendor/css-hamburgers/hamburgers.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/vendor/daterangepicker/daterangepicker.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/vendor/daterangepicker/daterangepicker.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/vendor/daterangepicker/moment.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/vendor/daterangepicker/moment.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/vendor/jquery/jquery-3.2.1.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/vendor/perfect-scrollbar/perfect-scrollbar.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/vendor/perfect-scrollbar/perfect-scrollbar.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/vendor/select2/select2.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/vendor/select2/select2.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/vendor/select2/select2.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/static/matrix/login_pkg/vendor/select2/select2.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/templates/matrix/login.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chatapp/templates/matrix/login_form.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/MatrixDjango.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/MatrixDjango.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MatrixDjango/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/MatrixDjango/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chatapp/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/chatapp/admin.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/chatapp/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/chatapp/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chatapp/templates/matrix/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/chatapp/templates/matrix/simple_chat.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chatapp/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/chatapp/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/chatapp/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/chatapp/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -145,7 +18,7 @@
     <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.4428656">
+    <splitter split-orientation="horizontal" split-proportion="0.5239787">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
@@ -172,8 +45,8 @@
           <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/chatapp/views.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="22">
-                  <caret line="24" column="52" lean-forward="true" selection-start-line="24" selection-start-column="52" selection-end-line="24" selection-end-column="52" />
+                <state relative-caret-position="268">
+                  <caret line="30" lean-forward="true" selection-start-line="30" selection-end-line="30" />
                   <folding>
                     <element signature="e#0#35#0" expanded="true" />
                   </folding>
@@ -218,8 +91,8 @@
           <file leaf-file-name="models.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/chatapp/models.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="313">
-                  <caret line="89" selection-start-line="89" selection-end-line="89" />
+                <state relative-caret-position="426">
+                  <caret line="72" column="21" lean-forward="true" selection-start-line="72" selection-start-column="21" selection-end-line="72" selection-end-column="21" />
                   <folding>
                     <element signature="e#0#28#0" expanded="true" />
                   </folding>
@@ -279,9 +152,9 @@
         <option value="$PROJECT_DIR$/chatapp/templates/matrix/simple_chat.html" />
         <option value="$PROJECT_DIR$/MatrixDjango/urls.py" />
         <option value="$PROJECT_DIR$/MatrixDjango/settings.py" />
-        <option value="$PROJECT_DIR$/chatapp/models.py" />
         <option value="$PROJECT_DIR$/chatapp/admin.py" />
         <option value="$PROJECT_DIR$/chatapp/views.py" />
+        <option value="$PROJECT_DIR$/chatapp/models.py" />
       </list>
     </option>
   </component>
@@ -421,16 +294,15 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="4" y="23" width="1920" height="1054" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="right" id="Cargo" order="3" />
-      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.399361" side_tool="true" visible="true" weight="0.39602926" />
+      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.3998935" side_tool="true" visible="true" weight="0.39602926" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Python Console" order="7" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.3291536" />
-      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.5772098" weight="0.1891327" />
+      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.5766773" weight="0.1891327" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.10063898" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" />
@@ -439,7 +311,7 @@
       <window_info anchor="right" id="SciView" order="3" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" sideWeight="0.600639" visible="true" weight="0.39602926" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" sideWeight="0.6001065" visible="true" weight="0.39602926" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -490,7 +362,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="150" />
+      <option name="time" value="151" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
@@ -839,22 +711,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/chatapp/models.py">
+    <entry file="file://$PROJECT_DIR$/chatapp/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="313">
-          <caret line="89" selection-start-line="89" selection-end-line="89" />
+        <state relative-caret-position="268">
+          <caret line="30" lean-forward="true" selection-start-line="30" selection-end-line="30" />
           <folding>
-            <element signature="e#0#28#0" expanded="true" />
+            <element signature="e#0#35#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/chatapp/views.py">
+    <entry file="file://$PROJECT_DIR$/chatapp/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
-          <caret line="24" column="52" lean-forward="true" selection-start-line="24" selection-start-column="52" selection-end-line="24" selection-end-column="52" />
+        <state relative-caret-position="426">
+          <caret line="72" column="21" lean-forward="true" selection-start-line="72" selection-start-column="21" selection-end-line="72" selection-end-column="21" />
           <folding>
-            <element signature="e#0#35#0" expanded="true" />
+            <element signature="e#0#28#0" expanded="true" />
           </folding>
         </state>
       </provider>

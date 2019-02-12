@@ -24,7 +24,7 @@ class Message(models.Model):
         return {'msg_text': self.msg_text,
                 'sender': self.sender}
 
-# TODO: I know this file is meant for dbmodels
+
 class Client:
     def __init__(self, server_url, username, password):
         try:
@@ -48,15 +48,6 @@ class Client:
 
     mclient = None
     current_room = None
-
-    def send_messages_test(self):
-        self.current_room.send_text('a test for an update')
-        return 'a test for an update'
-
-    def get_room_names(self):
-        room_names = []
-        for room in self.mclient.rooms:
-            room_names.append(room)
 
     def get_new_messages(self):
         """
@@ -88,9 +79,3 @@ class Client:
                               time_stamp=event['origin_server_ts'],
                               sender=event['sender'])
                 msg.save()
-
-
-    # TODO: this global client seems like a bad idea. maybe
-    # I could turn this into a base class that all client contexts could share
-    def set_client(self, client):
-        CLIENT = client

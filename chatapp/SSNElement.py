@@ -1,15 +1,35 @@
 import sys
 from collections import defaultdict
 from matrix_client.api import MatrixRequestError
+from matrix_client.client import MatrixClient
+from requests.exceptions import MissingSchema
+from .models import Message
+
 
 class SSNElement:
-    def __init__(self, client, landing_room):
-        self.m_client = client
+    def __init__(self, server_url, username, password):
+        try:
+            self.mclient = MatrixClient('https://' + server_url)
+            self.mclient.login("@" + username + ":matrix.org", password, limit=100, sync=True)
+        except MatrixRequestError as e:
+            print(e)
+            raise e
+
+        except MissingSchema as e:
+            print(e)
+            raise e
+
+        except Exception as e:
+            raise e
+
         """Additional state for SSN"""
-        self.current_room = None
-        self.landing_room = landing_room
+        self.current_room = self.mclient.join_room('#my_room:matrix.org')
+        self.current_room.backfill_previous_messages()
+        self.current_room.add_listener(self.on_message)
+        self.get_new_messages()
+
         self.friends = {}
-        self.user_id = self.m_client.user_id
+        self.user_id = self.mclient.user_id
         # the room table matches the room name to the to the room id
         self.room_table = {}
         self.is_room_setup = False
@@ -23,6 +43,28 @@ class SSNElement:
         self.update_room_table()
         self.rendered = False
         self.type = None
+
+    def get_new_messages(self):
+        """
+        Looks for new messages in current_room events and adds them to db model.
+        :return:
+        """
+        events = self.current_room.get_events()
+        most_recent_ts = Message.objects.latest('time_stamp').time_stamp
+
+        # make sure message is later than the last most recent message
+        new_msgs = filter(lambda e: e['type'] == 'm.room.message' and
+                                    e['origin_server_ts'] > most_recent_ts, events)
+        for event in new_msgs:
+            msg = Message(msg_text=event['content']['body'],
+                          time_stamp=event['origin_server_ts'],
+                          sender=event['sender'])
+            msg.save()
+
+
+
+
+
 
     @classmethod
     def on_message(cls, room, event):

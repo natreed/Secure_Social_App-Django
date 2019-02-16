@@ -17,10 +17,18 @@
   </header>
 
   <section>
-    <div id="messages">
-        <ul>
-            {%  for msg in  messages %}
-                <li>{{ msg }}</li>
+    <div id="messages" class="container">
+            {%  for msg in messages %}
+                <div>
+                    <span>
+                        <div >
+                            {{ msg.sender }}
+                        </div>
+                        <div>
+                            {{ msg.message }}
+                        </div>
+                    </span>
+                </div>
             {% endfor %}
         </ul>
     </div>

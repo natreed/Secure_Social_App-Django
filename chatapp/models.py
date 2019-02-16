@@ -1,18 +1,26 @@
+import time
+from threading import Thread
+from .SSNElement import SSNElement
+
 from django.db import models
-from django.db.models import Max
 from matrix_client.client import MatrixClient
 from matrix_client.errors import MatrixRequestError
 from requests.exceptions import MissingSchema
-import sys
+import django.dispatch
+from apscheduler.schedulers.background import BackgroundScheduler
+
 
 # TODO: Do I have to make this Global?
 CLIENTS = []
+
+
 
 
 class Message(models.Model):
     msg_text = models.CharField(max_length=600)
     time_stamp = models.IntegerField(default=0)
     sender = models.CharField(max_length=100)
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)
 
     class Meta:
         get_latest_by = 'time_stamp'
@@ -21,8 +29,24 @@ class Message(models.Model):
         return self.msg_text
 
     def get_data(self):
-        return {'msg_text': self.msg_text,
-                'sender': self.sender}
+        return a_message(self.msg_text, self.sender, self.time_stamp)
+
+
+class a_message():
+    def __init__(self, _msg, _sender, _timestamp):
+        self.message = _msg
+        self.sender = _sender
+        self.timestamp = _timestamp
+
+    message = ""
+    sender = ""
+    timestamp = ""
+
+def get_objects():
+    msg_list = []
+    for msg in Message.objects.order_by('time_stamp'):
+        msg_list.append(a_message(msg.msg_text, msg.sender, msg.time_stamp))
+    return msg_list
 
 
 class Client:
@@ -41,13 +65,22 @@ class Client:
         except Exception as e:
             raise e
 
-        self.current_room = self.mclient.join_room('#my_room:matrix.org')
+        self. current_room = self.mclient.join_room('#my_room:matrix.org')
         self.current_room.backfill_previous_messages()
         self.current_room.add_listener(self.on_message)
         self.get_new_messages()
+        self.msg_saved = django.dispatch.Signal(providing_args=["message", "username"])
+        # Syncs with home server every 30 seconds
+        sched = BackgroundScheduler()
+        sched.add_job(self.sync_loop, 'interval', seconds=30)
+        sched.start()
+
 
     mclient = None
     current_room = None
+
+    def sync_loop(self):
+        self.mclient.listen_for_events()
 
     def get_new_messages(self):
         """
@@ -78,4 +111,5 @@ class Client:
                 msg = Message(msg_text=event['content']['body'],
                               time_stamp=event['origin_server_ts'],
                               sender=event['sender'])
+                # msg_signal(msg.msg_text, msg.sender, msg.time_stamp)
                 msg.save()

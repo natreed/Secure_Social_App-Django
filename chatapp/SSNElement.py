@@ -1,35 +1,22 @@
 import sys
 from collections import defaultdict
+import django.dispatch
+from apscheduler.schedulers.background import BackgroundScheduler
 from matrix_client.api import MatrixRequestError
 from matrix_client.client import MatrixClient
 from requests.exceptions import MissingSchema
-from .models import Message
+from .models import Message, Room
 
 
 class SSNElement:
-    def __init__(self, server_url, username, password):
-        try:
-            self.mclient = MatrixClient('https://' + server_url)
-            self.mclient.login("@" + username + ":matrix.org", password, limit=100, sync=True)
-        except MatrixRequestError as e:
-            print(e)
-            raise e
+    def __init__(self, client, landing_room):
 
-        except MissingSchema as e:
-            print(e)
-            raise e
-
-        except Exception as e:
-            raise e
-
+        self.m_client = client
         """Additional state for SSN"""
-        self.current_room = self.mclient.join_room('#my_room:matrix.org')
-        self.current_room.backfill_previous_messages()
-        self.current_room.add_listener(self.on_message)
-        self.get_new_messages()
-
+        self.current_room = None
+        self.landing_room = landing_room
         self.friends = {}
-        self.user_id = self.mclient.user_id
+        self.user_id = self.m_client.user_id
         # the room table matches the room name to the to the room id
         self.room_table = {}
         self.is_room_setup = False
@@ -44,7 +31,7 @@ class SSNElement:
         self.rendered = False
         self.type = None
 
-    def get_new_messages(self):
+    def get_new_messages(self, db_room):
         """
         Looks for new messages in current_room events and adds them to db model.
         :return:
@@ -58,13 +45,14 @@ class SSNElement:
         for event in new_msgs:
             msg = Message(msg_text=event['content']['body'],
                           time_stamp=event['origin_server_ts'],
-                          sender=event['sender'])
+                          sender=event['sender'],
+                          room=db_room)
             msg.save()
 
-
-
-
-
+    def db_add_room(self, matrix_room):
+        r = Room(room_name=matrix_room.display_name, room_id=matrix_room.room_id)
+        r.save()
+        self.get_new_messages(r)
 
     @classmethod
     def on_message(cls, room, event):
@@ -102,6 +90,9 @@ class SSNElement:
 
             if room.name == 'Empty Room':
                 room_name = self.parse_room_name_or_id(room.room_id)
+            else:
+                room_name = room.name
+
             self.all_rooms_messages[room_name].append(msg)
 
     def show_rooms(self):
@@ -120,7 +111,9 @@ class SSNElement:
 
     def update_room_table(self):
         for id, room in self.m_client.rooms.items():
+            rm = Room(room_id=id, joined=False, room_name=room.display_name)
             self.room_table[room.name] = {"room_id": id, "joined": False}
+
 
     def parse_room_name_or_id(self, allias_user_id_or_room_id):
         return allias_user_id_or_room_id.split(':')[0].lstrip('#')

@@ -1,4 +1,6 @@
-
+from .SSNElement import SSNElement
+from .models import Room, Message
+from django.utils import timezone
 
 
 class SSNChat(SSNElement):
@@ -13,35 +15,42 @@ class SSNChat(SSNElement):
 
     def load(self, room_id_alias):
         room_name = self.parse_room_name_or_id(room_id_alias)
-        if room_name in self.room_table:
-            if room_id_alias in self.loaded_rooms.keys():
-                self.current_room = self.loaded_rooms[room_id_alias]
-                # print("CURRENT ROOM: {}".format(self.current_room.get_room_name()))
-                for msg in self.all_rooms_messages[room_name]:
-                    print(msg)
-            else:
-                self.current_room = ChatRoom(self.join_room(room_id_alias), self.init_msg_hist_for_room)
-                self.loaded_rooms[room_id_alias] = self.current_room
-                self.room_table[room_name]["loaded"] = True
-        else:
-            room_name = self.parse_room_name_or_id(room_id_alias)
-            room = self.m_client.create_room(room_name)
-            room.set_room_name(room_name)
-            self.room_table[self.room_handle] = {"room_id": room.room_id, "loaded": False}
-            self.current_room = ChatRoom(room, self.init_msg_hist_for_room)
-            self.loaded_rooms[room.room_id] = self.current_room
-        self.initialized = True
+        room_query = list(Room.objects.filter(room_name=room_name))
+        if len(room_query) == 1:
+            self.current_room = self.join_room(room_id_alias)
+
+        elif len(room_query) == 0:
+            """Create a new room"""
+            self.current_room = self.join_room(room_id_alias)
+            self.current_room.room_name = room_name
+            self.db_add_room(self.current_room)
 
     def on_message(self, room, event):
-        if event['type'] == "m.room.member":
-            if event['membership'] == "join":
-                if self.is_room_setup and not self.rendered:
-                    print("{0} joined".format(event['content']['displayname']))
-                    self.rendered = True
+        """
+        Listens and updates Message Model on message events.
+        :param room:
+        :param event:
+        :return:
+        """
 
-        elif event['type'] == "m.room.message":
-            self.send_room_message(room, event)
-        self.rendered = False
+        db_room = Room.objects.get(room_name=room.name)
+        if event['type'] == 'm.room.message':
+            if event['content']['msgtype'] == 'm.text':
+                background_color = "blue"
+                # TODO: set up a table with room members and their background colors
+                if event['sender'] != self.m_client.user_id:
+                    background_color = "red"
+
+                msg = Message(msg_text=event['content']['body'],
+                              time_stamp=event['origin_server_ts'],
+                              sender=event['sender'],
+                              background_color=background_color,
+                              room=db_room,
+                              date_time=timezone.now()
+                              )
+
+                msg.save()
+
 
 
 

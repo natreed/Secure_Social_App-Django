@@ -1,77 +1,69 @@
+from apscheduler.schedulers.background import BackgroundScheduler
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views import View
 from django.urls import reverse
 from .forms import AuthenticationForm, AddToChatForm
-from .models import Client, Message, CLIENTS, get_objects, a_message
+from .models import Message, ssn
+from .SSN import SSN
 from django.db.models.signals import post_save
-
 from django.dispatch import receiver
-from django.core.signals import request_finished
 
 
 app_name = 'chat_app'
+current_messages = []
 
 
-class SimpleChat(View):
-    form = AddToChatForm()
-    context = {'form': form, 'messages': get_objects()}
-
-    def get(self, request):
-        # connect message event handler
-        post_save.connect(receiver=self.Message_Event_Handler, sender=Message)
-        return render(request, 'matrix/simple_chat.html', self.context)
-
-    def post(self, request):
-        form = AddToChatForm(request.POST, )
-        if form.is_valid():
-            msg = form.cleaned_data['typedtext']
-            client = CLIENTS[0]
-            client.current_room.send_text(msg)
-            # TODO: Save All data Locally. Sync Less
-            client.mclient._sync()
-
-            # self.context['messages'] = Message.objects.order_by('time_stamp')
-
-        return render(request, 'matrix/simple_chat.html', self.context)
-
-    @receiver(post_save, sender=Client)
-    def Message_Event_Handler(self, sender, instance,  **kwargs):
-        msg_data = instance.get_data()
-        self.context['messages'].append(msg_data)
+# # TODO: I'd like to put the handler inside the View so I can just use context. This results in an error that I
+# # haven't figured out yet.
+@receiver(post_save, sender=Message)
+def Message_Event_Handler(sender, instance, **kwargs):
+    msg_data = instance.get_data()
+    current_messages.append(msg_data)
+    return
 
 
 class ChatWindow(View):
-    form = AddToChatForm()
-    context = {'form': form, 'messages': get_objects()}
+    def __init__(self):
+        super().__init__()
+        form = AddToChatForm()
+        self.context = {'form': form, 'messages': current_messages}
+        self.message_update_scheduler = BackgroundScheduler()
+
+    context = {}
+    chat_manager = None
 
     def get(self, request):
         # connect message event handler
-        client = CLIENTS[0]
-        rooms = list(client.mclient.rooms.values())
-        dispnm1 = rooms[0].display_name()
-        room_names = list(filter(lambda x: x.display_name, rooms))
-        post_save.connect(receiver=self.Message_Event_Handler, sender=Message)
-        return render(request, 'matrix/simple_chat.html', self.context)
+        self.chat_manager = ssn[0]
+        global current_messages
+        current_messages = self.chat_manager.get_messages()
+        self.context['messages'] = current_messages
+        self.context['user_id'] = self.chat_manager.get_user_id()
+        # self.message_update_scheduler.add_job(lambda: self.update_messages_context(request), 'interval', seconds=1)
+        # self.message_update_scheduler.start()
+        return render(request, 'matrix/chat_window.html', self.context)
 
     def post(self, request):
         form = AddToChatForm(request.POST, )
         if form.is_valid():
             msg = form.cleaned_data['typedtext']
-            client = CLIENTS[0]
-            client.current_room.send_text(msg)
-            # TODO: Save All data Locally. Sync Less
-            client.mclient._sync()
+            self.context['messages'] = current_messages
+            self.chat_manager = ssn[0]
+            self.chat_manager.current_interface.current_room.send_text(msg)
+            self.chat_manager.current_interface.m_client._sync()
 
-            # self.context['messages'] = Message.objects.order_by('time_stamp')
+        return render(request, 'matrix/chat_window.html', self.context)
 
-        return render(request, 'matrix/simple_chat.html', self.context)
-
-    @receiver(post_save, sender=Client)
-    def Message_Event_Handler(self, sender, instance,  **kwargs):
-        msg_data = instance.get_data()
-        self.context['messages'].append(msg_data)
-
+    #
+    # def update_messages_context(self, request):
+    #     global current_messages
+    #     if len(self.context['messages']) == len(current_messages):
+    #         return
+    #     else:
+    #         self.context['messages'] = current_messages
+    #         self.chat_manager.current_interface.m_client._sync()
+    #         return render(request, 'matrix/chat_window.html', self.context)
 
 
 def get_login(request):
@@ -84,7 +76,7 @@ def get_login(request):
             password = form.cleaned_data['password']
 
             #TODO: put this in the try block when finished debugging
-            client = Client(server, username, password)
+            client = SSN(server, username, password)
             try:
                 b=True
             except Exception as e:
@@ -92,7 +84,7 @@ def get_login(request):
                               {'form': form, 'error_message': "error: bad login credentials"})
             else:
 
-                CLIENTS.append(client)
+                ssn.append(client)
 
             return HttpResponseRedirect(reverse('chat_window'))  # Redirect after POST
     else:
@@ -101,5 +93,31 @@ def get_login(request):
     return render(request, 'matrix/login_form.html', {'form': form, })
 
 
-
+# class SimpleChat(View):
+#     form = AddToChatForm()
+#     context = {'form': form, 'messages': []}
+#     global current_messages
+#
+#     def get(self, request):
+#         # connect message event handler
+#         chat_manager = ssn[0]
+#         current_messages = chat_manager.get_messages()
+#         self.context['messages'] = current_messages
+#         return render(request, 'matrix/simple_chat.html', self.context)
+#
+#     def post(self, request):
+#         form = AddToChatForm(request.POST, )
+#         if form.is_valid():
+#             msg = form.cleaned_data['typedtext']
+#             chat_manager = ssn
+#             chat_manager.current_interface.current_room.send_text(msg)
+#             chat_manager.current_interface.current_room.get_events()
+#
+#         return render(request, 'matrix/simple_chat.html', self.context)
+#
+#     # # TODO: need to make this signal coming from specific room. Needs another handler.
+#     # @receiver(post_save, sender=Message)
+#     # def Message_Event_Handler(self, sender, instance,  **kwargs):
+#     #     msg_data = instance.get_data()
+#     #     self.context['messages'].append(msg_data)
 

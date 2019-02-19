@@ -31,15 +31,14 @@ class ChatWindow(View):
         self.message_update_scheduler = BackgroundScheduler()
 
     context = {}
-    chat_manager = None
 
     def get(self, request):
         # connect message event handler
-        self.chat_manager = ssn[0]
+        chat_manager = ssn[0]
         global current_messages
-        current_messages = self.chat_manager.get_messages()
+        current_messages = chat_manager.get_messages()
         self.context['messages'] = current_messages
-        self.context['user_id'] = self.chat_manager.get_user_id()
+        self.context['user_id'] = chat_manager.get_user_id()
         # self.message_update_scheduler.add_job(lambda: self.update_messages_context(request), 'interval', seconds=1)
         # self.message_update_scheduler.start()
         return render(request, 'matrix/chat_window.html', self.context)
@@ -49,9 +48,9 @@ class ChatWindow(View):
         if form.is_valid():
             msg = form.cleaned_data['typedtext']
             self.context['messages'] = current_messages
-            self.chat_manager = ssn[0]
-            self.chat_manager.current_interface.current_room.send_text(msg)
-            self.chat_manager.current_interface.m_client._sync()
+            chat_manager = ssn[0]
+            chat_manager.current_interface.current_room.send_text(msg)
+            chat_manager.current_interface.m_client._sync()
 
         return render(request, 'matrix/chat_window.html', self.context)
 

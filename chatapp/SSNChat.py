@@ -1,6 +1,5 @@
 from .SSNElement import SSNElement
 from .models import Room, Message
-from django.utils import timezone
 from datetime import datetime
 import pytz
 

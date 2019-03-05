@@ -50,9 +50,6 @@ class SSN:
         # Syncs with home server every 30 seconds
         sched = BackgroundScheduler()
         sched.add_job(self.sync_loop, 'interval', seconds=1)
-        #sched.start()
-
-
 
     def get_user_id(self):
         return self.username
@@ -111,5 +108,5 @@ class SSN:
         return SSNChat(self.m_client, self.chat_landing_room)
 
 
-    # def start_wall_client(self):
-    #     return SSNWall(self.m_client, self.chat_landing_room)
+    def start_wall_client(self):
+        return SSNWall(self.m_client, self.chat_landing_room)

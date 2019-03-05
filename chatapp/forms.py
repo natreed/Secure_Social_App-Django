@@ -9,3 +9,10 @@ class AuthenticationForm(forms.Form):
 
 class AddToChatForm(forms.Form):
     typedtext = forms.CharField(widget=forms.TextInput)
+
+
+
+
+
+
+

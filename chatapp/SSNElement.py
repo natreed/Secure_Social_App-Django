@@ -1,6 +1,9 @@
+import datetime
 import sys
 from collections import defaultdict
 import django.dispatch
+import pytz
+from datetime import datetime
 from apscheduler.schedulers.background import BackgroundScheduler
 from matrix_client.api import MatrixRequestError
 from matrix_client.client import MatrixClient
@@ -42,11 +45,15 @@ class SSNElement:
         # make sure message is later than the last most recent message
         new_msgs = filter(lambda e: e['type'] == 'm.room.message' and
                                     e['origin_server_ts'] > most_recent_ts, events)
+
         for event in new_msgs:
+            local_tz = pytz.timezone("US/Pacific")
+            utc_dt = datetime.fromtimestamp(event['origin_server_ts'] / 1000.0, local_tz)
             msg = Message(msg_text=event['content']['body'],
                           time_stamp=event['origin_server_ts'],
                           sender=event['sender'],
-                          room=db_room)
+                          room=db_room,
+                          date_time=utc_dt)
             msg.save()
 
     def db_add_room(self, matrix_room):

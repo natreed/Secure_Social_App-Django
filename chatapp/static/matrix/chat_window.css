@@ -60,9 +60,9 @@ img{ max-width:100%;}
   margin: 0;
   padding: 18px 16px 10px;
 }
-.inbox_chat { height: 90%; overflow-y: scroll;}
+.rooms_list { height: 90%; overflow-y: scroll;}
 
-.active_chat{ background:#ebebeb;}
+.active_room{ background:#ebebeb;}
 
 .incoming_msg_img {
   display: inline-block;

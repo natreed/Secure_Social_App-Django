@@ -1,6 +1,8 @@
 from .SSNElement import SSNElement
 from .models import Room, Message
 from django.utils import timezone
+from datetime import datetime
+import pytz
 
 
 class SSNChat(SSNElement):
@@ -9,9 +11,7 @@ class SSNChat(SSNElement):
         super().__init__(client, landing_room)
         self.type = 'C'  # c as in client
         self.user_id = self.m_client.user_id
-        self.user_name = self.parse_room_name_or_id(self.user_id)
-        self.room_handle = self.user_name + "_c"
-        self.room_name = self.parse_room_name_or_id(self.landing_room)
+        self.load(landing_room)
 
     def load(self, room_id_alias):
         room_name = self.parse_room_name_or_id(room_id_alias)
@@ -21,9 +21,17 @@ class SSNChat(SSNElement):
 
         elif len(room_query) == 0:
             """Create a new room"""
+            room = self.m_client.create_room(room_name)
+            room.set_room_name(room_name)
             self.current_room = self.join_room(room_id_alias)
-            self.current_room.room_name = room_name
-            self.db_add_room(self.current_room)
+            """add that room to the database"""
+            room_entry = Room(
+                room_name=room_name,
+                room_id=room.room_id,
+                joined=True
+            )
+            room_entry.save()
+
 
     def on_message(self, room, event):
         """
@@ -41,12 +49,15 @@ class SSNChat(SSNElement):
                 if event['sender'] != self.m_client.user_id:
                     background_color = "red"
 
+                local_tz = pytz.timezone("US/Pacific")
+                utc_dt = datetime.fromtimestamp(event['origin_server_ts']/1000.0, local_tz)
+
                 msg = Message(msg_text=event['content']['body'],
                               time_stamp=event['origin_server_ts'],
                               sender=event['sender'],
                               background_color=background_color,
                               room=db_room,
-                              date_time=timezone.now()
+                              date_time=utc_dt
                               )
 
                 msg.save()

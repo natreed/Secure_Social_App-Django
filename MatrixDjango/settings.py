@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
     'widget_tweaks',
     'chatapp.apps.ChatappConfig',
     'django.contrib.admin',
@@ -71,6 +72,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'MatrixDjango.wsgi.application'
+ASGI_APPLICATION = 'MatrixDjango.routing.application'
 
 
 # Database

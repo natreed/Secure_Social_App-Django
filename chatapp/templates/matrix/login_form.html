@@ -37,14 +37,14 @@
                 <form method="post">
                     {% csrf_token %}
                     <div class="wrap-input100">
-                        {% render_field form.matrixServer class+="input100" type="text" name="server" placeholder="Server URL" value="www.matrix.org"%}
+                        {% render_field form.matrixServer class+="input100" type="text" name="server" placeholder="Server URL" value="matrix.org"%}
                         {{ form.matrixServer.errors }}
                         <span class="focus-input100-1"></span>
                         <span class="focus-input100-2"></span>
                     </div>
 
                     <div class="wrap-input100">
-                        {% render_field form.username class+="input100" type="text" name="email" placeholder="Email" value="natreed" %}
+                        {% render_field form.username class+="input100" type="text" name="username" placeholder="Username" value="natreed" %}
                         {{ form.username.errors }}
                         <span class="focus-input100-1"></span>
                         <span class="focus-input100-2"></span>

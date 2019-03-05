@@ -5,7 +5,8 @@
 
 <html>
 <head>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>var chat_window_url = '{% url 'chat_window' %}'</script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/d3js/5.7.0/d3.min.js"></script>
     <script type="text/javascript" src="{% static 'matrix/chat_window.js' %}"></script>
@@ -13,6 +14,35 @@
     <link rel="stylesheet" href="{% static 'matrix/chat_window.css' %}">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 </head>
+
+<script>
+    $( document ).ready(function() {
+        //scroll to bottom
+        let targetNode = document.querySelector('#msg_history');
+        scroll_to_bottom(targetNode);
+        let config = { attributes: true, childList: true, subtree: true};
+        let observer = new MutationObserver(callback);
+        observer.observe(targetNode, config);
+
+        //send room_name to View to load new room
+        $(document).on('click', '.active_room', function () {
+            let room_name = $(this).attr('id');
+
+            $.ajax({
+                url: chat_window_url,
+                type: 'get',
+                data: {
+                    'element': "roomsList",
+                    'room_name': room_name
+                },
+                success: function () {
+                    $(this).attr("background", "orange")
+                }
+            });
+        });
+    });
+</script>
+
 
 <body>
 <div class="container">
@@ -32,17 +62,20 @@
                 </span> </div>
             </div>
           </div>
-          <div class="inbox_chat">
-            <div class="chat_list active_chat">
-              <div class="chat_people">
-                <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                <div class="chat_ib">
-                  <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                  <p>Test, which is a new approach to have all solutions
-                    astrology under one roof.</p>
+          <div class="rooms_list" href="{% url 'chat_window' %}">
+
+              {% for room in rooms %}
+                <div class="active_room chat_list " id="{{ room }}">
+                  <div class="chat_people">
+                    <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+                    <div class="chat_ib" >
+                      <h5 class="room_name" id="{{ room }}"> {{ room }} <span class="msg_count">New msg count</span></h5>
+                      <p></p>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
+              {% endfor %}
+
             <div class="chat_list">
               <div class="chat_people">
                 <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
@@ -56,51 +89,18 @@
           </div>
         </div>
         <div class="mesgs">
-          <div class="msg_history" id="msg_history">
-{#            <div class="incoming_msg">#}
-{#              <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>#}
-{#              <div class="received_msg">#}
-{#                <div class="received_withd_msg">#}
-{#                  <p>Test which is a new approach to have all#}
-{#                    solutions</p>#}
-{#                  <span class="time_date"> 11:01 AM    |    June 9</span></div>#}
-{#              </div>#}
-{#            </div>#}
-              {% for msg in messages %}
-                  {% if msg.background_color == 'blue' %}
-                    <div class="room_msg outgoing_msg" >
-                        <div class="sent_msg" >
-                            <div style="background-color: blue;">
-                                <p>{{ msg.sender }}</p>
-                                <p>{{ msg.message }}</p>
-                            </div>
-                            <span class="time_date"> {{ msg.date_time  }} </span>
-                        </div>
-                    </div>
-                  {% else %}
-                    <div class="incoming_msg">
-                        <div class="received_msg">
-                            <div class="received_withd_msg">
-                                <p>{{ msg.sender }}</p>
-                                <p>{{ msg.message }}</p>
-                            </div>
-                            <span class="time_date"> {{ msg.date_time  }} </span>
-                        </div>
-                    </div>
-                  {% endif %}
-              {% endfor %}
 
-          </div>
+          {% include 'matrix/msg_history.html' %}
 
           <div class="type_msg input_msg_write">
             <form method="post">
                 {% csrf_token %}
                 {% render_field form.typedtext class="write_msg" id="chat-input" type="text" placeholder="say anything" autofocus="true" %}
             </form>
-{#            <div class="input_msg_write">#}
-{#              <input type="text" class="write_msg" placeholder="Type a message" />#}
-{#              <button class="msg_send_btn" type="button"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>#}
-{#            </div>#}
+            <form>
+
+
+            </form>
           </div>
         </div>
       </div>
@@ -108,9 +108,7 @@
 
       <p class="text-center top_spac"> Design by <a target="_blank" href="#">Sunil Rajput</a></p>
 
-    </div></div>
-    <script>
-
-    </script>
-    </body>
+    </div>
+</div>
+</body>
 </html>

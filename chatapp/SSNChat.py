@@ -17,7 +17,6 @@ class SSNChat(SSNElement):
         room_query = list(Room.objects.filter(room_name=room_name))
         if len(room_query) == 1:
             self.current_room = self.join_room(room_id_alias)
-
         elif len(room_query) == 0:
             """Create a new room"""
             room = self.m_client.create_room(room_name)
@@ -31,7 +30,6 @@ class SSNChat(SSNElement):
             )
             room_entry.save()
 
-
     def on_message(self, room, event):
         """
         Listens and updates Message Model on message events.
@@ -39,8 +37,7 @@ class SSNChat(SSNElement):
         :param event:
         :return:
         """
-
-        db_room = Room.objects.get(room_name=room.name)
+        db_room = Room.objects.get(room_id=room.room_id)
         if event['type'] == 'm.room.message':
             if event['content']['msgtype'] == 'm.text':
                 background_color = "blue"
@@ -58,8 +55,10 @@ class SSNChat(SSNElement):
                               room=db_room,
                               date_time=utc_dt
                               )
-
                 msg.save()
+
+
+
 
 
 

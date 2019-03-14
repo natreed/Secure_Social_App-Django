@@ -32,6 +32,35 @@ function callback(mutationList, observer) {
   });
 }
 
+$( document ).ready(function() {
+        //scroll to bottom
+        let targetNode = document.querySelector('#msg_history');
+        if (targetNode) {
+            scroll_to_bottom(targetNode);
+            let config = { attributes: true, childList: true, subtree: true};
+            let observer = new MutationObserver(callback);
+            observer.observe(targetNode, config);
+        }
+
+
+        //send room_name to View to load new room
+        // $(document).on('click', '.active_room', function () {
+        //     let room_name = $(this).attr('id');
+        //
+        //     $.ajax({
+        //         url: chat_window_url,
+        //         type: 'get',
+        //         data: {
+        //             'element': "roomsList",
+        //             'room_name': room_name
+        //         },
+        //         success: function () {
+        //             $(this).attr("background", "orange")
+        //         }
+        //     });
+        // });
+    });
+
 
 
 function scroll_to_bottom(element) {

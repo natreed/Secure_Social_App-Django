@@ -2,6 +2,7 @@
 
     <script>
         var timeout;
+        // TODO: fix refresh messages
         function refresh_messages(){
             $.ajax({
                 type: "get",
@@ -21,12 +22,6 @@
                 }
             });
         }
-
-        //TODO: This is where the activation of refresh will take place
-        //currently turned off till the bugs get worked out
-        {#$(function(){#}
-        {#    refresh_messages();#}
-        {#\\});#}
 
         window.onbeforeunload = closingCode;
         function closingCode(){
@@ -65,12 +60,9 @@
             return msg_history;
         }
 
-        //TODO: having trouble decoding json between python and javascript
-        //var html_message_list = get_html_history($.parseJSON('{{ messages }}' ))
-        //$('#msg_history').html(html_message_list);
-        {#autoescape turns off escape characters being loaded. In this case it allows the raw json to be imported#}
         {% autoescape off %}
             $('#msg_history').html(get_html_history({{ messages }}));
         {% endautoescape %}
+
     </script>
 </div>

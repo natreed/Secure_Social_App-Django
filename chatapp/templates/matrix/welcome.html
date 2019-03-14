@@ -1,0 +1,63 @@
+{% load static %}
+{% load widget_tweaks %}
+<!------ Include the above in your HEAD tag ---------->
+
+
+<html>
+<head>
+    <script>var welcome_url = '{% url 'welcome' %}'</script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/d3js/5.7.0/d3.min.js"></script>
+    <script type="text/javascript" src="{% static 'matrix/chat_window.js' %}"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'matrix/chat_window.css' %}">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+</head>
+
+<body>
+<div class="container">
+<h3 class=" text-center">Secure Social Net - <i>built on Matrix</i></h3>
+<div class="messaging">
+      <div class="inbox_msg">
+        <div class="inbox_people">
+          <div class="headind_srch">
+            <div class="recent_heading">
+              <h4>Recent</h4>
+            </div>
+            <div class="srch_bar">
+              <div class="stylish-input-group">
+                <input type="text" class="search-bar"  placeholder="Search" >
+                <span class="input-group-addon">
+                <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
+                </span> </div>
+            </div>
+          </div>
+
+           <div class="container-login100-form-btn m-t-20">
+
+               <form class="welcome_option" action="{% url 'wall_window' %}">
+                    {% csrf_token %}
+					<button class="chat_or_wall_choice_btn" type="submit" name="render_chat" href="{% url 'wall_window' %}">
+                        Go to Wall
+                    </button>
+				</form>
+
+           </div>
+           <div class="container-login100-form-btn m-t-20">
+
+               <form class="welcome_option" action="{% url 'chat_window' %}">
+                    {% csrf_token %}
+					<button class="chat_or_wall_choice_btn" type="submit" name="render_chat" href="{% url 'chat_window' %}">
+                        Go to Chat Rooms
+                    </button>
+               </form>
+
+           </div>
+        </div>
+      </div>
+      <p class="text-center top_spac"> Design by <a target="_blank" href="#">Sunil Rajput</a></p>
+    </div>
+</div>
+</body>
+</html>

@@ -1,13 +1,16 @@
 from django.db import models
+from django.template.backends import django
 from django.utils import timezone
+import datetime
 
 
 # TODO: Do I have to make this Global?
 ssn = []
 
 class Room(models.Model):
-    room_name = models.CharField(max_length=60, unique=True)
+    room_name = models.CharField(max_length=60)
     room_id = models.CharField(max_length=80, unique=True)
+    is_post_room = models.BooleanField(default=True)
     joined = models.BooleanField(default=False)
 
 
@@ -47,7 +50,19 @@ class Post(models.Model):
     wall = models.ForeignKey(Wall, on_delete=models.CASCADE)
     post_message = models.CharField(max_length=1000)
     room = models.OneToOneField(Room, on_delete=models.CASCADE, primary_key=True)
-    date_time = models.DateTimeField('date published', default=None)
+    post_id = models.IntegerField(unique=True, default=0)
+    date_time_created = models.DateTimeField('date published', default=timezone.now)
+    date_time_last_read = models.DateTimeField("Date", default=timezone.now)
+
+    def get_data(self):
+        return {
+            'room': self.room.room_name,
+            'message': self.post_message,
+            'date_time': self.date_time_created.strftime('%Y-%m-%d %H:%M')
+        }
+
+
+
 
 
 

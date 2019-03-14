@@ -1,0 +1,25 @@
+<div class="posts_list" href="{% url 'chat_window' %}">
+{# posts #}
+
+          {% for post in posts %}
+            <form class="welcome_option" method="post">
+                {% csrf_token %}
+                <button class="get_messages" type="submit" name="render_chat" value="{{ post.room }}">
+                    <div class="active_room chat_list " id="{{ post.room }}">
+                      <div class="chat_people">
+                          <form>
+                              <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+                          </form>
+                        <div class="chat_ib" >
+                          <h5 class="room_name" id="{{ post.room }}"> {{ post.room }} <span class="msg_count">New msg count</span></h5>
+                          <div>{{ post.message }}</div>
+                            <span class="time_date"> {{ post.date_time }}  </span>
+                        </div>
+                      </div>
+                    </div>
+                </button>
+
+            </form>
+          {% endfor %}
+
+</div>

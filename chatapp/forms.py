@@ -11,6 +11,19 @@ class AddToChatForm(forms.Form):
     typedtext = forms.CharField(widget=forms.TextInput)
 
 
+class AddPostForm(forms.Form):
+    typedtext = forms.CharField(widget=forms.TextInput)
+
+
+CONTEXT_CHOICES = ['WALL', 'CHAT']
+
+
+class ChooseChatOrWall (forms.Form):
+    selection = forms.CharField(label="Choose an option:",
+                                widget=forms.RadioSelect(choices=CONTEXT_CHOICES))
+
+
+
 
 
 

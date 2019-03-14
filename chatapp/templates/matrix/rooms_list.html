@@ -1,0 +1,17 @@
+<div class="rooms_list" href="{% url 'chat_window' %}">
+
+  {% for room in rooms %}
+    <div class="active_room chat_list " id="{{ room }}">
+      <div class="chat_people">
+          <form >
+              <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+          </form>
+        <div class="chat_ib" >
+          <h5 class="room_name" id="{{ room }}"> {{ room }} <span class="msg_count">New msg count</span></h5>
+          <p></p>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+
+</div>

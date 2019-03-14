@@ -163,5 +163,3 @@ class SSNElement:
                 sys.exit(12)
         return room
 
-
-

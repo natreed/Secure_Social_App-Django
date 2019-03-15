@@ -21,8 +21,17 @@
 <div class="messaging">
       <div class="inbox_msg">
         <div class="inbox_people">
-          {% include 'matrix/heading_search.html' %}
+          <div class="container-login100-form-btn m-t-20">
+               <form class="welcome_option" action="{% url 'wall_window' %}">
+                    {% csrf_token %}
+					<button class="chat_or_wall_choice_btn" type="submit" name="render_chat" href="{% url 'wall_window' %}">
+                        Go to Wall
+                    </button>
+				</form>
+           </div>
+
           {% include 'matrix/rooms_list.html' %}
+
         </div>
 
         <div class="room_hdr">

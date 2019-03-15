@@ -58,7 +58,8 @@ class Post(models.Model):
         return {
             'room': self.room.room_name,
             'message': self.post_message,
-            'date_time': self.date_time_created.strftime('%Y-%m-%d %H:%M')
+            'date_time': self.date_time_created.strftime('%Y-%m-%d %H:%M'),
+            'last_read_at': self.date_time_last_read.strftime('%Y-%m-%d %H:%M')
         }
 
 

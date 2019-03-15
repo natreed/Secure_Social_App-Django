@@ -7,6 +7,6 @@ urlpatterns = [
     path('chat_window', views.ChatWindow.as_view(), name='chat_window'),
     path('', views.get_login, name='get_login'),
     path('welcome', views.Welcome.as_view(), name='welcome'),
-    path('wall', views.Wall.as_view(), name='wall_window'),
+    path('wall', views.WallView.as_view(), name='wall_window'),
 ]
 

@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect, HttpRequest
 from django.views import View
 from django.urls import reverse
 from .forms import AuthenticationForm, AddToChatForm, AddPostForm
-from .models import Message, ssn, Room
+from .models import Message, ssn, Room, Wall
 from .SSN import SSN
 from django.db.models.signals import post_save
 import json
@@ -25,16 +25,19 @@ class Welcome(View):
         super().__init__()
 
     context = {}
+
     def get(self, request):
         return render(request, 'matrix/welcome.html')
 
+
 """#################################### WALL #########################################"""
 
-class Wall(View):
+
+class WallView(View):
     def __init__(self):
-        super(Wall, self).__init__()
+        super(WallView, self).__init__()
         form = AddPostForm()
-        self.context = {'form': form, 'posts': posts, 'current_room': None, 'user_id': None, 'messages': []}
+        self.context = {'form': form, 'posts': posts, 'current_room': None, 'is_owner': False, 'is_wall': False, 'messages': []}
 
     def get(self, request):
         chat_manager = ssn[0]
@@ -45,7 +48,13 @@ class Wall(View):
         current_url = 'wall_window'
         current_messages = []
         posts = chat_manager.wall_client.get_posts()
-        self.context['current_room'] = chat_manager.wall_client.current_room.display_name
+        user_id = chat_manager.get_user_id()
+        room_name = chat_manager.wall_client.current_room.name
+        if user_id in room_name:
+            self.context['is_owner'] = True
+        if 'wall' in room_name:
+            self.context['is_wall'] = True
+        self.context['current_room'] = room_name
         self.context['posts'] = posts
         return render(request, 'matrix/wall_window.html', self.context)
 
@@ -55,6 +64,7 @@ class Wall(View):
         if 'render_chat' in request.POST:
             room_id = Room.objects.all().filter(room_name=request.POST['render_chat'])[0].room_id
             chat_manager.change_rooms(room_id)
+            chat_manager.wall_client.current_room.name = request.POST['render_chat']
         elif 'chat-input' in request.POST:
             msg = request.POST['chat-input']
             chat_manager.wall_client.current_room.send_text(msg)
@@ -66,10 +76,14 @@ class Wall(View):
                 posts.append(post.get_data())
         self.context['posts'] = posts
         chat_manager.wall_client.m_client._sync()
-        self.context['current_room'] = chat_manager.wall_client.current_room.name
+        user_id = chat_manager.get_user_id()
+        room_name = chat_manager.wall_client.current_room.name
+        if user_id in room_name:
+            self.context['is_owner'] = True
+        self.context['is_wall'] = False
+        self.context['current_room'] = room_name
         current_messages = chat_manager.get_current_room_messages()
         self.context['messages'] = current_messages
-
 
         return render(request, 'matrix/wall_window.html', self.context)
 

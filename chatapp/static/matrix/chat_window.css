@@ -15,10 +15,12 @@ img{ max-width:100%;}
   overflow: hidden;
 }
 
+.room_hdr{float: left; width:60%}
+
 .top_spac{ margin: 20px 0 0;}
 
 
-.recent_heading {float: left; width:40%;}
+.recent_heading {float: left; width:60%;}
 .srch_bar {
   display: inline-block;
   text-align: right;
@@ -40,7 +42,8 @@ img{ max-width:100%;}
   font-size: 21px;
   margin: auto;
 }
-.srch_bar input{ border:1px solid #cdcdcd; border-width:0 0 1px 0; width:80%; padding:2px 0 4px 6px; background:none;}
+
+.srch_bar input{ border:1px solid #cdcdcd; width:80%; padding:2px 0 4px 6px; background:none;}
 .srch_bar .input-group-addon button {
   background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
   border: medium none;
@@ -200,7 +203,7 @@ iframe {
   height: 60px;
   background-color: #4272d7;
 
-  font-family: OpenSans-Regular;
+  /*font-family: OpenSans-Regular;*/
   font-size: 14px;
   color: #fff;
   line-height: 1.2;

@@ -46,9 +46,7 @@
           <div class="type_msg input_msg_write">
             <form method="post">
                 {% csrf_token %}
-                {% render_field form.typedtext class="write_msg" id="chat-input" type="text" placeholder="say anything" autofocus="true" %}
-            </form>
-            <form>
+                <input class="write_msg" id="chat-input" type="text" placeholder="add comment" name="chat-input">
             </form>
           </div>
         </div>

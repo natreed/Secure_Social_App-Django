@@ -88,7 +88,6 @@ class WallView(View):
         return render(request, 'matrix/wall_window.html', self.context)
 
 
-
 """#################################### CHAT #########################################"""
 
 
@@ -124,15 +123,19 @@ class ChatWindow(View):
             return render(request, 'matrix/chat_window.html', self.context)
 
     def post(self, request):
-        form = AddToChatForm(request.POST, )
-        if form.is_valid():
-            msg = form.cleaned_data['typedtext']
-            chat_manager = ssn[0]
-            global current_messages
+        chat_manager = ssn[0]
+        global current_messages
+        if 'render_chat' in request.POST:
+            room = Room.objects.all().filter(room_name=request.POST['render_chat'])[0]
+            room_id = room.room_id
+            chat_manager.change_rooms(room_id)
+            chat_manager.chat_client.current_room.name = request.POST['render_chat']
+        elif 'chat-input' in request.POST:
+            msg = request.POST['chat-input']
             chat_manager.chat_client.current_room.send_text(msg)
-            chat_manager.chat_client.m_client._sync()
-            self.context['current_room'] = chat_manager.chat_client.current_room.display_name
-            self.context['messages'] = chat_manager.get_current_room_messages()
+        chat_manager.chat_client.m_client._sync()
+        self.context['current_room'] = chat_manager.chat_client.current_room.display_name
+        self.context['messages'] = chat_manager.get_current_room_messages()
         return render(request, 'matrix/chat_window.html', self.context)
 
     def change_rooms_ajax(self, chat_manager, request):

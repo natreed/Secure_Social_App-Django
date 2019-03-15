@@ -97,8 +97,8 @@ class SSN:
         msg_list = []
 
         room_id = self.current_interface.current_room.room_id
-
-        for msg in Room.objects.get(room_id=room_id).message_set.order_by('time_stamp'):
+        msgs = Room.objects.get(room_id=room_id).message_set.order_by('time_stamp')
+        for msg in msgs:
             msg_list.append(msg.get_data())
 
         return msg_list

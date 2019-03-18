@@ -7,12 +7,10 @@ from .forms import AuthenticationForm, AddToChatForm, AddPostForm
 from .models import Message, ssn, Room, Wall
 from .SSN import SSN
 from django.db.models.signals import post_save
-import json
 
 app_name = 'chat_app'
 
 # current view: this is for re-rendering correct view when
-current_url = ""
 current_messages = []
 posts = []
 all_rooms = []
@@ -37,17 +35,22 @@ class WallView(View):
     def __init__(self):
         super(WallView, self).__init__()
         form = AddPostForm()
-        self.context = {'form': form, 'posts': posts, 'current_room': None, 'is_owner': False, 'is_wall': False, 'messages': []}
+        self.context = {'form': form,
+                        'posts': posts,
+                        'current_room': None,
+                        'is_owner': False,
+                        'is_wall': False,
+                        'messages': [],
+                        'friends': []}
 
     def get(self, request):
         chat_manager = ssn[0]
         chat_manager.current_interface = chat_manager.wall_client
+        self.context['friends'] = chat_manager.wall_client.friends
         global posts
-        global current_url
         global current_messages
-        current_url = 'wall_window'
         current_messages = []
-        posts = chat_manager.wall_client.get_posts()
+        posts = chat_manager.wall_client.get_posts(chat_manager.wall_client.user_name)
         user_id = chat_manager.get_user_id()
         room_name = chat_manager.wall_client.current_room.name
         if user_id in room_name:
@@ -60,6 +63,7 @@ class WallView(View):
 
     def post(self, request):
         chat_manager = ssn[0]
+        self.context['friends'] = chat_manager.wall_client.friends.keys()
         global current_messages
         if 'render_chat' in request.POST:
             room_id = Room.objects.all().filter(room_name=request.POST['render_chat'])[0].room_id
@@ -67,12 +71,14 @@ class WallView(View):
             chat_manager.wall_client.current_room.name = request.POST['render_chat']
         elif 'chat-input' in request.POST:
             msg = request.POST['chat-input']
-            chat_manager.wall_client.current_room.send_text(msg)
+            if msg != "":
+                chat_manager.wall_client.current_room.send_text(msg)
         else:
             form = AddToChatForm(request.POST, )
             if form.is_valid():
                 msg = form.cleaned_data['typedtext']
-                post = chat_manager.wall_client.add_post(msg)
+                if msg != "":
+                    post = chat_manager.wall_client.add_post(msg)
                 posts.append(post.get_data())
         self.context['posts'] = posts
         chat_manager.wall_client.m_client._sync()
@@ -80,13 +86,83 @@ class WallView(View):
         room_name = chat_manager.wall_client.current_room.name
         if user_id in room_name:
             self.context['is_owner'] = True
-        self.context['is_wall'] = False
+        if 'wall' in room_name:
+            self.context['is_wall'] = True
         self.context['current_room'] = room_name
         current_messages = chat_manager.get_current_room_messages()
         self.context['messages'] = current_messages
 
         return render(request, 'matrix/wall_window.html', self.context)
 
+"""############################### FRIEND WALL"""
+
+class FriendWall(View):
+    def __init__(self):
+        super(FriendWall, self).__init__()
+        form = AddPostForm()
+        self.context = {'form': form,
+                        'posts': posts,
+                        'current_room': None,
+                        'is_owner': False,
+                        'is_wall': False,
+                        'messages': [],
+                        'friends': []}
+
+    def get(self, request):
+        global current_messages
+        global posts
+        chat_manager = ssn[0]
+        chat_manager.current_interface = chat_manager.wall_client
+        self.context['friends'] = chat_manager.wall_client.friends.keys()
+        friend_user_name = request.GET['render_wall']
+        if friend_user_name:
+            chat_manager.change_rooms(chat_manager.wall_client.friends[friend_user_name])
+            chat_manager.wall_client.load_friend_wall(chat_manager.wall_client.current_room)
+            posts = chat_manager.wall_client.get_posts(friend_user_name)
+        current_messages = []
+        user_id = chat_manager.get_user_id()
+        room_name = chat_manager.wall_client.current_room.name
+        if user_id in room_name:
+            self.context['is_owner'] = True
+        if 'wall' in room_name:
+            self.context['is_wall'] = True
+        self.context['current_room'] = room_name
+        self.context['posts'] = posts
+        return render(request, 'matrix/wall_window.html', self.context)
+
+    def post(self, request):
+        chat_manager = ssn[0]
+        self.context['friends'] = chat_manager.wall_client.friends.keys()
+        global current_messages
+        if 'render_chat' in request.POST:
+            room_id = Room.objects.all().filter(room_name=request.POST['render_chat'])[0].room_id
+            chat_manager.change_rooms(room_id)
+            chat_manager.wall_client.current_room.name = request.POST['render_chat']
+        elif 'chat-input' in request.POST:
+            msg = request.POST['chat-input']
+            if msg != "":
+                chat_manager.wall_client.current_room.send_text(msg)
+        else:
+            form = AddToChatForm(request.POST, )
+            if form.is_valid():
+                msg = form.cleaned_data['typedtext']
+                if msg != "":
+                    post = chat_manager.wall_client.add_post(msg)
+                posts.append(post.get_data())
+        self.context['posts'] = posts
+        chat_manager.wall_client.m_client._sync()
+        user_id = chat_manager.get_user_id()
+        room_name = chat_manager.wall_client.current_room.name
+        if user_id in room_name:
+            self.context['is_owner'] = True
+            self.context['is_wall'] = False
+        if 'wall' in room_name:
+            self.context['is_wall'] = True
+        self.context['current_room'] = room_name
+        current_messages = chat_manager.get_current_room_messages()
+        self.context['messages'] = current_messages
+
+        return render(request, 'matrix/wall_window.html', self.context)
 
 """#################################### CHAT #########################################"""
 
@@ -103,28 +179,31 @@ class ChatWindow(View):
                           dispatch_uid='msg_saved')
 
     context = {'rooms': []}
+    username = None
 
     def get(self, request):
         chat_manager = ssn[0]
+        self.username = chat_manager.get_user_id()
+        chat_manager.current_interface = chat_manager.chat_client
+        chat_manager.change_rooms(chat_manager.chat_client.get_landing_room())
         global current_messages
         global all_rooms
-        global current_url
-        current_url = 'chat_window'
+        # global current_url
+        # current_url = 'chat_window'
         current_messages = chat_manager.get_current_room_messages()
         all_rooms = chat_manager.get_chat_rooms()
         self.context['current_room'] = chat_manager.chat_client.current_room.display_name
         self.context['messages'] = current_messages
         self.context['user_id'] = chat_manager.get_user_id()
         self.context['rooms'] = all_rooms
-        if request.is_ajax():
-            if request.GET['element'] == 'roomsList':
-                return self.change_rooms_ajax(chat_manager, request)
-        else:
-            return render(request, 'matrix/chat_window.html', self.context)
+        return render(request, 'matrix/chat_window.html', self.context)
 
     def post(self, request):
         chat_manager = ssn[0]
+        self.username = chat_manager.get_user_id()
         global current_messages
+
+
         if 'render_chat' in request.POST:
             room = Room.objects.all().filter(room_name=request.POST['render_chat'])[0]
             room_id = room.room_id
@@ -132,28 +211,21 @@ class ChatWindow(View):
             chat_manager.chat_client.current_room.name = request.POST['render_chat']
         elif 'chat-input' in request.POST:
             msg = request.POST['chat-input']
-            chat_manager.chat_client.current_room.send_text(msg)
+            if msg != "":
+                chat_manager.chat_client.current_room.send_text(msg)
         chat_manager.chat_client.m_client._sync()
         self.context['current_room'] = chat_manager.chat_client.current_room.display_name
         self.context['messages'] = chat_manager.get_current_room_messages()
         return render(request, 'matrix/chat_window.html', self.context)
 
-    def change_rooms_ajax(self, chat_manager, request):
-        global current_messages
-        chat_manager.change_rooms(request.GET['room_name'])
-        # Sync should call should trigger Message Event handler and update current messages
-        chat_manager.chat_client.m_client._sync()
-        self.context['current_room'] = chat_manager.chat_client.current_room
-        self.context['messages'] = chat_manager.get_current_room_messages()
-        # TODO: For some reason this does not render. Requires a post to render new chat messages.
-        return render(request, 'matrix/chat_window.html', self.context)
-
-
     # fires on database save
     # TODO: Unable to update messages on received message.
     def Message_Event_Handler(self, sender, instance, **kwargs):
-        msg_data = instance.get_data()
-        self.context['messages'].append(msg_data)
+        if self.username not in instance.sender:
+            # return HttpResponseRedirect(reverse('chat_window'))
+            pass
+        else:
+            pass
 
 """#################################### WALL #########################################"""
 
@@ -171,9 +243,8 @@ def get_login(request):
             password = form.cleaned_data['password']
 
             client = SSN(server, username, password)
-
             try:
-                b=True;
+                b=True
             except Exception as e:
                 return render(request, 'matrix/login_form.html',
                               {'form': form, 'error_message': "error: bad login credentials"})

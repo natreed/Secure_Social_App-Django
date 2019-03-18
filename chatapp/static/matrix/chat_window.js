@@ -42,23 +42,6 @@ $( document ).ready(function() {
             observer.observe(targetNode, config);
         }
 
-
-        //send room_name to View to load new room
-        // $(document).on('click', '.active_room', function () {
-        //     let room_name = $(this).attr('id');
-        //
-        //     $.ajax({
-        //         url: chat_window_url,
-        //         type: 'get',
-        //         data: {
-        //             'element': "roomsList",
-        //             'room_name': room_name
-        //         },
-        //         success: function () {
-        //             $(this).attr("background", "orange")
-        //         }
-        //     });
-        // });
     });
 
 
